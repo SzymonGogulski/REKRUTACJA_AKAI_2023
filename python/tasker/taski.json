@@ -1,0 +1,18 @@
+[
+    {
+        "content": "wynieś śmieci",
+        "done": false
+    },
+    {
+        "content": "umyj zęby",
+        "done": false
+    },
+    {
+        "content": "kup jedzenie",
+        "done": false
+    },
+    {
+        "content": "zrób zadanie domowe",
+        "done": true
+    }
+]

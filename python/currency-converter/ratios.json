@@ -1,0 +1,26 @@
+[
+  {
+    "base_currency": "PLN",
+    "target_currency": "AED",
+    "date_fetched": "2023-10-20",
+    "ratio": 0.873661
+  },
+  {
+    "base_currency": "USD",
+    "target_currency": "AED",
+    "date_fetched": "2023-10-20",
+    "ratio": 3.673005
+  },
+  {
+    "base_currency": "USD",
+    "target_currency": "EUR",
+    "date_fetched": "2023-10-20",
+    "ratio": 0.944815
+  },
+  {
+    "base_currency": "USD",
+    "target_currency": "AMD",
+    "date_fetched": "2023-10-20",
+    "ratio": 401.460511
+  }
+]
