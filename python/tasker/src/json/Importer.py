@@ -33,6 +33,11 @@ class Importer:
                 data = []
                 json.dump(data, file)
             self.data = data
+        elif os.path.getsize(path) == 0:
+            with open(path, 'w') as file:
+                data = []
+                json.dump(data, file)
+                self.data = data
         else:
             with open(path, 'r', encoding='utf-8') as file:
                 data = json.load(file)

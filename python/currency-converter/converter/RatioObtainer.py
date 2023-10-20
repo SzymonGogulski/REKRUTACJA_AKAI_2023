@@ -34,7 +34,11 @@ class RatioObtainer:
         path = self.get_ratio_file_path()
 
         #try to open file
-        if not os.path.exists(path):
+        if not os.path.exists(path): # File doesn't exist at all
+            with open(path, 'w') as file:
+                file.write('[]')
+            return False
+        elif os.path.getsize(path) == 0: # File exists but is empty
             with open(path, 'w') as file:
                 file.write('[]')
             return False
