@@ -1,14 +1,56 @@
 [
   {
-    "base_currency": "GBP",
-    "target_currency": "EUR",
-    "date_fetched": "2023-10-20",
-    "ratio": 1.147657
+    "base_currency": "EUR",
+    "target_currency": "AUD",
+    "date_fetched": "2023-10-19",
+    "ratio": 1.679069
   },
   {
-    "base_currency": "GBP",
-    "target_currency": "PLN",
+    "base_currency": "EUR",
+    "target_currency": "AUD",
     "date_fetched": "2023-10-20",
-    "ratio": 5.122671
+    "ratio": 1.679069
+  },
+  {
+    "base_currency": "EUR",
+    "target_currency": "PLN",
+    "date_fetched": "2023-10-21",
+    "ratio": 4.46386
+  },
+  {
+    "base_currency": "USD",
+    "target_currency": "AED",
+    "date_fetched": "2023-10-21",
+    "ratio": 3.673005
+  },
+  {
+    "base_currency": "USD",
+    "target_currency": "EUR",
+    "date_fetched": "2023-10-21",
+    "ratio": 0.94325
+  },
+  {
+    "base_currency": "USD",
+    "target_currency": "GBP",
+    "date_fetched": "2023-10-21",
+    "ratio": 0.822978
+  },
+  {
+    "base_currency": "PLN",
+    "target_currency": "AUD",
+    "date_fetched": "2023-10-21",
+    "ratio": 0.376147
+  },
+  {
+    "base_currency": "CAD",
+    "target_currency": "JPY",
+    "date_fetched": "2023-10-21",
+    "ratio": 109.14023
+  },
+  {
+    "base_currency": "EUR",
+    "target_currency": "AUD",
+    "date_fetched": "2023-10-21",
+    "ratio": 1.679069
   }
 ]

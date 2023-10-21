@@ -46,21 +46,21 @@ class RatioObtainer:
             with open(path, "r") as file:
                 data = json.load(file)
             
-            if len(data) == 0:
-                return False # File exists and is empty
+                if len(data) == 0:
+                    return False # File exists but the entries array is empty
 
-            for i in data:
-                if ((i['base_currency'] == self.base) and (i['target_currency'] == self.target) and (i['date_fetched'] == self.date_fetched)):
-                    file.close()
-                    return True # There is already such an entry today in ratios.json
+                for i in data:
+                    if ((i['base_currency'] == self.base) and (i['target_currency'] == self.target) and (i['date_fetched'] == self.date_fetched)):
+                        print("Found such entry today. ")
+                        return True # There is already such an entry today in ratios.json
                 
-        return False # there's no today's entry for given values at all
+            return False # there's no today's entry for given values at all
 
     def fetch_ratio(self):
         """
         This function calls API for today's exchange ratio
         Should ask API for today's exchange ratio with given base and target currency
-        and call save_ratio method to save it    
+        and call save_ratio method to save it
         """
         # URL tags
         BASE_URL = "http://api.exchangerate.host/"
@@ -82,6 +82,18 @@ class RatioObtainer:
         Should save or update exchange rate for given pair in json file
         takes ratio as argument
         example file structure is shipped in project's directory, yours can differ (as long as it works)
+
+        
+        I'm assuming that we want to keep old entries in json file.
+        I don't really understand why this function has to "update exchange rates". Was_ratio_saved_today inside App.py
+        if not obtainer.was_ratio_saved_today():
+            obtainer.fetch_ratio()
+        makes sure that we won't have to update anything if the ratio was already fetched today, so there is nothing to update.
+        Basically, once we fetch the ratio, we will use it for the rest of the day; we won't update it for the rest of the day.
+        The next day, we will simply create a new entry, so there's still no need to update any existing entries.
+        This only makes sense if "create new exchange rate entry" and "update exchange rate" are synonymous.
+
+        The task should specify if we want to retain historical entries in the file or update them to the current date.
         """
         new_entry = {
             "base_currency": self.base,
@@ -92,25 +104,35 @@ class RatioObtainer:
         path = self.get_ratio_file_path()
 
         #try to open file
-        if not os.path.exists(path): # File doesn't exist we have to create it.
-            with open(path, 'w') as file:
-                json.dump(new_entry, file, indent=2)
+        # if not os.path.exists(path): # File doesn't exist we have to create it.
+        #     with open(path, 'w') as file:
+        #         json.dump(new_entry, file, indent=2) 
+        # save_ratio will be called allways after fetch_ratio() and was_ratio_saved_today()
+        # was_ratio_saved_today() makes sure that ratios.json exists in given file path and has 
+        # at least an empty array inside of it. This fact makes this code redundant. 
+        # There's no need to check again if file exists. 
+        #else: # File exists, we have to update it if responding entry exists
         
-        else: # File exists, we have to update it if responding entry exists
-            with open(path, "r") as file:
-                data = json.load(file)
+        #flag = True # theres no need to use it
+        data = []
+        with open(path, "r") as file: # Read ratios file to data variable
+            data = json.load(file)
 
-            flag = True
-            for i in data: # Update ratio if given pair already exists today
-                if (i['base_currency'] == self.base and i['target_currency'] == self.target and i['date_fetched'] == self.date_fetched):
-                    i['ratio'] = ratio
-                    flag = False # Found responding entry and updated it, no need to create a new one
-                    break
-
-            if(flag):    
-                data.append(new_entry)
-                with open(path, "w") as file:
-                    json.dump(data, file, indent=2)
+        # for i in data: # Update ratio if given pair already exists today
+        #     if (i['base_currency'] == self.base and i['target_currency'] == self.target and i['date_fetched'] == self.date_fetched):
+        #         i['ratio'] = ratio
+        #         with open(path, "w") as file:
+        #             json.dump(data, file, indent=2)
+        #         flag = False # Found responding entry and updated it, no need to create a new one
+        #         break
+        # This code is also redundant. save_ratio will only run when was_ratio_saved_today returns False, 
+        # meaning that no entry for given currency pair exists today, so there's no entry to update. We 
+        # just need to create the new entry and append it to json file
+ 
+        # if(flag): useless    
+        data.append(new_entry)
+        with open(path, "w") as file:
+            json.dump(data, file, indent=2)
         
     def get_matched_ratio_value(self):
         """
@@ -120,7 +142,7 @@ class RatioObtainer:
         with open(path, "r") as file:
             data = json.load(file)
             
-        for i in data: # Update ratio if given pair already exists today
-            if (i['base_currency'] == self.base and i['target_currency'] == self.target and i['date_fetched'] == self.date_fetched):
-                return float(i['ratio'])
-        return 1.0
+            for i in data: # Update ratio if given pair already exists today
+                if (i['base_currency'] == self.base and i['target_currency'] == self.target and i['date_fetched'] == self.date_fetched):
+                    return float(i['ratio'])
+
